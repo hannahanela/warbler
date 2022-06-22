@@ -37,6 +37,7 @@ class User(db.Model):
 
     id = db.Column(
         db.Integer,
+        autoincrement=True,
         primary_key=True,
     )
 
@@ -54,11 +55,13 @@ class User(db.Model):
 
     image_url = db.Column(
         db.Text,
+        nullable=False,
         default=DEFAULT_IMAGE_URL,
     )
 
     header_image_url = db.Column(
         db.Text,
+        nullable=False,
         default=DEFAULT_HEADER_IMAGE_URL,
     )
 
@@ -105,6 +108,7 @@ class User(db.Model):
         )
 
         db.session.add(user)
+        db.session.commit()
         return user
 
     @classmethod
@@ -150,6 +154,7 @@ class Message(db.Model):
 
     id = db.Column(
         db.Integer,
+        autoincrement=True,
         primary_key=True,
     )
 
