@@ -35,10 +35,7 @@ connect_db(app)
 
 @app.before_request
 def add_user_to_g():
-    """If we're logged in, add curr user to Flask global.
-    TODO: make separate @app.before_request and make csrf separate function"""
-
-    g.csrf_form = CSRFProtectForm()
+    """If we're logged in, add curr user to Flask global."""
 
     if CURR_USER_KEY in session:
         g.user = User.query.get(session[CURR_USER_KEY])
@@ -58,6 +55,14 @@ def do_logout():
 
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
+
+
+@app.before_request
+def add_csrf_form_to_g():
+    """Add CSRFProtectForm to Flask global.
+    TODO: make separate @app.before_request and make csrf separate function"""
+
+    g.csrf_form = CSRFProtectForm()
 
 
 @app.route('/signup', methods=["GET", "POST"])
