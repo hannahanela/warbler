@@ -67,10 +67,14 @@ class User(db.Model):
 
     bio = db.Column(
         db.Text,
+        nullable=False,
+        default='',
     )
 
     location = db.Column(
         db.Text,
+        nullable=False,
+        default='',
     )
 
     password = db.Column(
