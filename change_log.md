@@ -26,6 +26,8 @@ Added user bio to user detail page -> detail.html
 
 Added inline styling for header image -> detail.html
 
+Added user bio to users page and search -> index.html
+
 
 -----------------templates Changes-------------------
 
