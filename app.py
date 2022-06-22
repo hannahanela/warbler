@@ -238,7 +238,7 @@ def stop_following(follow_id):
 
 
 @app.route('/users/profile', methods=["GET", "POST"])
-def profile():
+def edit_user_profile():
     """Update profile for current user. Confirms correct user via password.
     TODO: 
         - rename view function, 
@@ -266,6 +266,7 @@ def profile():
             db.session.commit()
             return redirect(f'/users/{ g.user.id }')
         else:
+            flash("Incorrect credentials.", "danger")
             return render_template('/users/edit.html', form=form)
 
     else:
