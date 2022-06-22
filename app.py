@@ -35,7 +35,8 @@ connect_db(app)
 
 @app.before_request
 def add_user_to_g():
-    """If we're logged in, add curr user to Flask global."""
+    """If we're logged in, add curr user to Flask global.
+    TODO: make separate @app.before_request and make csrf separate function"""
 
     g.csrf_form = CSRFProtectForm()
 
@@ -234,6 +235,9 @@ def stop_following(follow_id):
 @app.route('/users/profile', methods=["GET", "POST"])
 def profile():
     """Update profile for current user. Confirms correct user via password.
+    TODO: 
+        - rename view function, 
+        - correct if authentication is wrong show flash message
 
     Redirect to user detail page.
     """
@@ -268,6 +272,8 @@ def delete_user():
     """Delete user.
 
     Redirect to signup page.
+
+    TODO: Add csrf protection to delete.
     """
 
     if not g.user:
@@ -349,6 +355,8 @@ def homepage():
 
     - anon users: no messages
     - logged in: 100 most recent messages of followed_users and current user
+
+    TODO: update to use User.follows relationship to get following_users
     """
 
     if g.user:

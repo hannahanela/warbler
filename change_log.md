@@ -43,7 +43,7 @@ Logged in user is being tracked in the session and then loaded into the g object
 
 The g object is a way to store information that the request can then access. It does not persist across requests.
 
-add_user_to_g is a view funciton that gets the current user from the session and stores it in g. This creates easy access/reference to the current user.
+add_user_to_g is a view function that gets the current user from the session and stores it in g. This creates easy access/reference to the current user.
 
 @app.before_request runs before every request, it acts as a setup for the request and does the authentication before the view function is called
 
