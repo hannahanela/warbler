@@ -6,9 +6,9 @@ from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
 from forms import (UserAddForm, LoginForm, MessageForm, UserEditForm,
-    CSRFProtectForm)
+                   CSRFProtectForm)
 from models import (db, connect_db, User, Message, Follows,
-    DEFAULT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL)
+                    DEFAULT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL)
 
 load_dotenv()
 
@@ -134,7 +134,6 @@ def logout():
     return redirect('/')
 
 
-
 ##############################################################################
 # General user routes:
 
@@ -234,7 +233,10 @@ def stop_following(follow_id):
 
 @app.route('/users/profile', methods=["GET", "POST"])
 def profile():
-    """Update profile for current user."""
+    """Update profile for current user. Confirms correct user via password.
+
+    Redirect to user detail page.
+    """
 
     if not g.user:
         flash("Access unauthorized.", "danger")
@@ -245,21 +247,20 @@ def profile():
     if form.validate_on_submit():
         g.user.username = form.username.data
         g.user.email = form.email.data
-        g.user.image_url = (form.image_url.data 
-            or DEFAULT_IMAGE_URL)
-        g.user.header_image_url = (form.header_image_url.data 
-            or DEFAULT_HEADER_IMAGE_URL)
+        g.user.image_url = (form.image_url.data
+                            or DEFAULT_IMAGE_URL)
+        g.user.header_image_url = (form.header_image_url.data
+                                   or DEFAULT_HEADER_IMAGE_URL)
         g.user.bio = form.bio.data
 
         if User.authenticate(g.user.username, form.password.data):
             db.session.commit()
             return redirect(f'/users/{ g.user.id }')
         else:
-            return render_template('/users/edit.html', form=form)   
+            return render_template('/users/edit.html', form=form)
 
     else:
         return render_template('/users/edit.html', form=form)
-
 
 
 @app.post('/users/delete')
@@ -347,17 +348,15 @@ def homepage():
     """Show homepage:
 
     - anon users: no messages
-    - logged in: 100 most recent messages of followed_users
+    - logged in: 100 most recent messages of followed_users and current user
     """
 
-#   TODO: query: 
-# 
-
-
     if g.user:
-        following_users = Follows.query.filter(Follows.user_following_id == g.user.id).all()
+        following_users = Follows.query.filter(
+            Follows.user_following_id == g.user.id).all()
         if following_users:
-            show_messages_from_users = [user.user_being_followed_id for user in following_users]
+            show_messages_from_users = [
+                user.user_being_followed_id for user in following_users]
             show_messages_from_users.append(g.user.id)
         else:
             show_messages_from_users = [g.user.id]

@@ -12,6 +12,10 @@ Added nullable=False and default='' to user.bio
 
 Added navbar styling for buttons and their hover. -> style.css
 
+-----------------app.py Changes-------------------
+
+Changed template to create.html for add_message().
+
 
 -----------------templates/users Changes-------------------
 Added each followed_user bio to card-bio -> following.html
