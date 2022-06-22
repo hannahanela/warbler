@@ -5,8 +5,10 @@ from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from forms import UserAddForm, LoginForm, MessageForm, UserEditForm, CSRFProtectForm
-from models import db, connect_db, User, Message, DEFAULT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL
+from forms import (UserAddForm, LoginForm, MessageForm, UserEditForm,
+    CSRFProtectForm)
+from models import (db, connect_db, User, Message, Follows,
+    DEFAULT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL)
 
 load_dotenv()
 
@@ -302,7 +304,7 @@ def add_message():
 
         return redirect(f"/users/{g.user.id}")
 
-    return render_template('messages/new.html', form=form)
+    return render_template('messages/create.html', form=form)
 
 
 @app.get('/messages/<int:message_id>')
@@ -348,9 +350,23 @@ def homepage():
     - logged in: 100 most recent messages of followed_users
     """
 
+#   TODO: query: 
+# 
+
+
     if g.user:
+        following_users = Follows.query.filter(Follows.user_following_id == g.user.id).all()
+        if following_users:
+            show_messages_from_users = [user.user_being_followed_id for user in following_users]
+            show_messages_from_users.append(g.user.id)
+        else:
+            show_messages_from_users = [g.user.id]
+
+        # breakpoint()
+
         messages = (Message
                     .query
+                    .filter(Message.user_id.in_(show_messages_from_users))
                     .order_by(Message.timestamp.desc())
                     .limit(100)
                     .all())
