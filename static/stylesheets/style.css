@@ -41,6 +41,16 @@ body.error-404 {
   color: #1c94e0;
 }
 
+.navbar button {
+  color: #66757f;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.navbar button:hover {
+  color: #1c94e0;
+}
+
 .navbar-brand {
   display: flex;
   align-items: center;

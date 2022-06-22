@@ -8,6 +8,11 @@ Added autoincrement=True to message id column and user id column
 Added nullable=False and default='' to user.bio
 
 
+-----------------style/sheets Changes-------------------
+
+Added navbar styling for buttons and their hover. -> style.css
+
+
 -----------------templates/users Changes-------------------
 Added each followed_user bio to card-bio -> following.html
 
@@ -16,6 +21,13 @@ Added each follower bio to card-bio -> followers.html
 Added user bio to user detail page -> detail.html
 
 
+-----------------templates Changes-------------------
+
+Added form for logout POST request. Updated styling classes. -> base.html
+
+
 
 -----------------Notes-------------------
-uncertain method for ordering messages on individual user page (users/show.html)
+
+Uncertain method for ordering messages on individual user page (users/show.html)
+
