@@ -3,7 +3,7 @@
 {% block content %}
 
 <div id="warbler-hero"
-     class="full-width">
+     class="full-width" style="background-image: url('{{ user.header_image_url }}');">
 </div>
 <img src="{{ user.image_url }}"
      alt="Image for {{ user.username }}"
@@ -83,7 +83,7 @@
     <p>{{ user.bio }}</p>
     <p class="user-location">
       <span class="fa fa-map-marker"></span>
-      LOCATION HERE
+      {{ user.location }}
     </p>
   </div>
 

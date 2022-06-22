@@ -20,6 +20,8 @@ Added each follower bio to card-bio -> followers.html
 
 Added user bio to user detail page -> detail.html
 
+Added inline styling for header image -> detail.html
+
 
 -----------------templates Changes-------------------
 
