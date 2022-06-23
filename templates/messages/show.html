@@ -51,12 +51,12 @@
             {% if g.user %}
             {% if g.user.likes_message( message.id ) %}
             <form method="POST"
-                  action="/users/stop-following/">
+                  action="/messages/unlike/{{ message.id }}">
               <button class="btn btn-primary btn-sm">Unlike</button>
             </form>
             {% else %}
             <form method="POST"
-                  action="/users/follow/">
+                  action="/messages/like/{{ message.id }}">
               <button class="btn btn-outline-primary btn-sm">
                 Like
               </button>

@@ -110,11 +110,9 @@ class User(db.Model):
     )
 
     #TODO: needs to be tested
-    likes = db.relationship(
+    liked_messages = db.relationship(
         'Message',
         secondary='likes',
-        primaryjoin=(Like.message_being_liked_id == id),
-        secondaryjoin=(Like.user_liking_id == id),
         backref='users',
     )
 
@@ -183,7 +181,7 @@ class User(db.Model):
         """Does this user like this message?"""
 
         liked_messages = [
-            message for message in self.likes if message == message_id]
+            message for message in self.liked_messages if message.id == message_id]
         return len(liked_messages) == 1
 
 

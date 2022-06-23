@@ -335,7 +335,7 @@ def show_message(message_id):
     msg = Message.query.get_or_404(message_id)
     return render_template('messages/show.html', message=msg)
 
-@app.post('/messages/<int:message_id>')
+@app.post('/messages/like/<int:message_id>')
 def like_message(message_id):
     """Like a message."""
 
@@ -344,16 +344,16 @@ def like_message(message_id):
         return redirect("/")
 
     liked_message = Message.query.get_or_404(message_id)
-    # FIXME: these are user authored messages, NOT all available messages by users
-    # Message.user_id != g.user.id
-    g.user.message.append(like_message)
+    # TODO: move condition to templates
+    # if Message.user_id != g.user.id
+
+    # breakpoint()
+    g.user.liked_messages.append(liked_message)
     db.session.commit()
 
-    # TODO: make template to display likes
-    # add a star to html????
-    # make 
 
-    return render_template()
+    return redirect(f'/messages/{message_id}')
+
 
 
 @app.post('/messages/<int:message_id>/delete')
