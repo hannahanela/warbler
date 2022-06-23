@@ -22,25 +22,25 @@
         <p>{{ message.text }}</p>
         <span>
           {% if g.user and message.user_id != g.user.id %}
-          {% if g.user.likes_message( message.id ) %}
-          <form method="POST"
-                action="/messages/unlike/{{ message.id }}">
-            {{ g.csrf_form.hidden_tag() }}
-            <button class="btn btn-primary btn-sm messages-like">
-              <i class="fas fa-feather-alt"></i>
-            </button>
-          </form>
-          {% else %}
-          <form method="POST"
-                action="/messages/like/{{ message.id }}">
-            {{ g.csrf_form.hidden_tag() }}
-            <button class="btn btn-outline-primary btn-sm messages-like">
-              <i class="fas fa-feather-alt"></i>
-            </button>
-          </form>
+            {% if g.user.likes_message( message.id ) %}
+              <form method="POST"
+                    action="/messages/unlike/{{ message.id }}">
+                {{ g.csrf_form.hidden_tag() }}
+                <button class="btn btn-primary btn-sm messages-like">
+                  <i class="fas fa-feather-alt"></i>
+                </button>
+              </form>
+            {% else %}
+              <form method="POST"
+                    action="/messages/like/{{ message.id }}">
+                {{ g.csrf_form.hidden_tag() }}
+                <button class="btn btn-outline-primary btn-sm messages-like">
+                  <i class="fas fa-feather-alt"></i>
+                </button>
+              </form>
+            {% endif %}
           {% endif %}
-          {% endif %}
-          </span>
+        </span>
       </div>
     </li>
 

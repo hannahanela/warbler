@@ -1,0 +1,53 @@
+{% extends 'users/detail.html' %}
+
+{% block user_details %}
+<div class="col-sm-6">
+    <ul class="list-group" id="messages">
+  
+      {% for message in user.liked_messages %}
+  
+      <li class="list-group-item">
+        <a href="/messages/{{ message.id }}" class="message-link"></a>
+  
+        <a href="/users/{{ message.user.id }}">
+          <img src="{{ message.user.image_url }}"
+               alt="user image"
+               class="timeline-image">
+        </a>
+  
+        <div class="message-area">
+          <a href="/users/{{ message.user.id }}">@{{ message.user.username }}</a>
+          <span class="text-muted">
+                {{ message.timestamp.strftime('%d %B %Y') }}
+              </span>
+          <p>{{ message.text }}</p>
+          <span>
+            {% if g.user and message.user_id != g.user.id %}
+            {% if g.user.likes_message( message.id ) %}
+            <form method="POST"
+                  action="/messages/unlike/{{ message.id }}">
+              {{ g.csrf_form.hidden_tag() }}
+              <button class="btn btn-primary btn-sm messages-like">
+                <i class="fas fa-feather-alt"></i>
+              </button>
+            </form>
+            {% else %}
+            <form method="POST"
+                  action="/messages/like/{{ message.id }}">
+              {{ g.csrf_form.hidden_tag() }}
+              <button class="btn btn-outline-primary btn-sm messages-like">
+                <i class="fas fa-feather-alt"></i>
+              </button>
+            </form>
+            {% endif %}
+            {% endif %}
+            </span>
+        </div>
+      </li>
+  
+      {% endfor %}
+  
+    </ul>
+  </div>
+
+{% endblock %}
