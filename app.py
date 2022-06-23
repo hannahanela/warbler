@@ -292,6 +292,7 @@ def delete_user():
         do_logout()
         db.session.delete(g.user)
         db.session.commit()
+        session.pop(g.user)
 
         flash(f"Successfully deleted user.", "success")
         return redirect("/signup")
