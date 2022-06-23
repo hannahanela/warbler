@@ -56,7 +56,7 @@ body.error-404 {
   align-items: center;
 }
 
-.navbar-brand > img {
+.navbar-brand>img {
   display: inline-block;
   margin-bottom: 2px;
   margin-right: 5px;
@@ -64,7 +64,7 @@ body.error-404 {
   border-radius: 2px;
 }
 
-.nav > li > a > img {
+.nav>li>a>img {
   width: 32px;
   border-radius: 32px;
 }
@@ -92,7 +92,7 @@ nav form.navbar-form {
   box-sizing: border-box;
 }
 
-#search.form-control + .btn {
+#search.form-control+.btn {
   position: absolute;
   right: 9px;
   top: 2px;
@@ -102,8 +102,8 @@ nav form.navbar-form {
   color: #66757f;
 }
 
-#search.form-control + .btn:active,
-#search.form-control + .btn:focus {
+#search.form-control+.btn:active,
+#search.form-control+.btn:focus {
   box-shadow: none;
 }
 
@@ -118,7 +118,7 @@ nav form.navbar-form {
    a background color.
  */
 
-.onboarding > .navbar {
+.onboarding>.navbar {
   background-image: url("/static/images/nav-bg.png");
   background-size: 100% 100%;
 }
@@ -140,11 +140,11 @@ nav form.navbar-form {
   right: 16px;
 }
 
-.onboarding > .navbar a {
+.onboarding>.navbar a {
   color: #fff;
 }
 
-.onboarding > .navbar form.navbar-form {
+.onboarding>.navbar form.navbar-form {
   display: none;
 }
 
@@ -158,7 +158,7 @@ nav form.navbar-form {
   }
 }
 
-nav + .container {
+nav+.container {
   margin-bottom: 1rem;
 }
 
@@ -233,12 +233,12 @@ nav + .container {
   align-items: center;
 }
 
-.user-stats > .ms-auto {
+.user-stats>.ms-auto {
   display: flex;
   align-items: center;
 }
 
-.user-stats > .ms-auto .btn {
+.user-stats>.ms-auto .btn {
   min-width: 105px;
   padding: 6px 16px;
 }
@@ -251,7 +251,7 @@ nav + .container {
   line-height: 1;
 }
 
-.stat > .small {
+.stat>.small {
   color: #657786;
   font-weight: bold;
   font-size: 12px;
@@ -259,7 +259,7 @@ nav + .container {
   margin-bottom: 0;
 }
 
-.stat > .small + h4 {
+.stat>.small+h4 {
   font-size: 18px;
   font-weight: bold;
   padding-top: 3px;
@@ -323,7 +323,7 @@ nav + .container {
   margin-top: 20px;
 }
 
-.user-card > div {
+.user-card>div {
   position: absolute;
   background: white;
 }
@@ -363,7 +363,7 @@ nav + .container {
   margin-left: 10px;
 }
 
-.card-link > p {
+.card-link>p {
   position: absolute;
 }
 
@@ -438,34 +438,34 @@ p.card-bio {
 
 /* ============================== Signed in Home */
 
-#home-aside > .user-card {
+#home-aside>.user-card {
   margin-top: 0;
   overflow: hidden;
 }
 
-#home-aside > .user-card .card-link {
+#home-aside>.user-card .card-link {
   display: flex;
 }
 
-#home-aside > .user-card .card-link > p {
+#home-aside>.user-card .card-link>p {
   margin-left: 0.5rem;
   margin-top: 0.25rem;
 }
 
-#home-aside > .user-card .stat {
+#home-aside>.user-card .stat {
   padding: 14px 0 7px;
 }
 
-#home-aside > .user-card .user-stats {
+#home-aside>.user-card .user-stats {
   display: flex;
   justify-content: space-around;
 }
 
-#home-aside > .user-card > div {
+#home-aside>.user-card>div {
   width: 100%;
 }
 
-#home-aside .card-link > p {
+#home-aside .card-link>p {
   position: relative;
 }
 
@@ -488,7 +488,7 @@ p.card-bio {
   justify-content: space-between;
 }
 
-.edit-btn-area > .btn {
+.edit-btn-area>.btn {
   width: 48%;
 }
 
@@ -518,24 +518,17 @@ p.card-bio {
   min-width: 105px;
 }
 
-#messages.no-hover .message-footer {
-  display: flex;
-  justify-content: space-between;
-  height: 47px;
-  margin-top: 3px;
-}
-
 .messages-like {
   position: absolute;
   top: 4px;
-  right: 4px;
+  right: 10px;
   z-index: 1;
 }
 
 .messages-like-bottom {
   position: absolute;
   bottom: 4px;
-  right: 4px;
+  right: 10px;
   z-index: 1;
 }
 
@@ -558,7 +551,7 @@ p.card-bio {
   color: white;
 }
 
-.message-404 > h4.display-4 {
+.message-404>h4.display-4 {
   font-size: 2.5em;
 }
 
