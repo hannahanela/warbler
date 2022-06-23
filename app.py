@@ -59,8 +59,7 @@ def do_logout():
 
 @app.before_request
 def add_csrf_form_to_g():
-    """Add CSRFProtectForm to Flask global.
-    TODO: make separate @app.before_request and make csrf separate function"""
+    """Add CSRFProtectForm to Flask global."""
 
     g.csrf_form = CSRFProtectForm()
 
@@ -240,9 +239,6 @@ def stop_following(follow_id):
 @app.route('/users/profile', methods=["GET", "POST"])
 def edit_user_profile():
     """Update profile for current user. Confirms correct user via password.
-    TODO: 
-        - rename view function, 
-        - correct if authentication is wrong show flash message
 
     Redirect to user detail page.
     """
@@ -279,7 +275,7 @@ def delete_user():
 
     Redirect to signup page.
 
-    TODO: Add csrf protection to delete.
+    Redirect to homepage if unauthorized attempt made.
     """
 
     if not g.user:
@@ -349,6 +345,7 @@ def like_message(message_id):
 
     liked_message = Message.query.get_or_404(message_id)
     # FIXME: these are user authored messages, NOT all available messages by users
+    # Message.user_id != g.user.id
     g.user.message.append(like_message)
     db.session.commit()
 
@@ -389,16 +386,15 @@ def homepage():
     - anon users: no messages
     - logged in: 100 most recent messages of followed_users and current user
 
-    TODO: update to use User.follows relationship to get following_users
     """
 
     if g.user:
-        user_following_ids = [user.id for user in g.user.following]
-        user_following_ids.append(g.user.id)
+        ids = [user.id for user in g.user.following]
+        ids.append(g.user.id)
 
         messages = (Message
                     .query
-                    .filter(Message.user_id.in_(user_following_ids))
+                    .filter(Message.user_id.in_(ids))
                     .order_by(Message.timestamp.desc())
                     .limit(100)
                     .all())

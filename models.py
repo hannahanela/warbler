@@ -29,6 +29,23 @@ class Follows(db.Model):
         primary_key=True,
     )
 
+class Like(db.Model):
+    """Connection of a message <-> user_liking_message."""
+
+    __tablename__ = 'likes'
+
+    message_being_liked_id = db.Column(
+        db.Integer,
+        db.ForeignKey('message.id', ondelete="cascade"),
+        primary_key=True,
+    )
+
+    user_liking_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id', ondelete="cascade"),
+        primary_key=True,
+    )
+
 
 class User(db.Model):
     """User in the system."""
@@ -91,6 +108,15 @@ class User(db.Model):
         secondaryjoin=(Follows.user_following_id == id),
         backref="following",
     )
+
+    # likes = db.relationship(
+    #     'Message',
+    #     secondary='likes',
+    #     primaryjoin=(Like.message_being_liked_id == id),
+    #     secondaryjoin=(Like.user_liking_id == id),
+    #     backref='users',
+    # )
+
 
     def __repr__(self):
         return f"<User #{self.id}: {self.username}, {self.email}>"
@@ -177,6 +203,15 @@ class Message(db.Model):
         db.Integer,
         db.ForeignKey('users.id', ondelete='CASCADE'),
         nullable=False,
+    )
+
+    # TODO: needs to be tested
+    likes = db.relationship(
+        'Message',
+        secondary='likes',
+        primaryjoin=(Like.message_being_liked_id == id),
+        secondaryjoin=(Like.user_liking_id == id),
+        backref='users',
     )
 
 
