@@ -366,20 +366,12 @@ def homepage():
     """
 
     if g.user:
-        following_users = Follows.query.filter(
-            Follows.user_following_id == g.user.id).all()
-        if following_users:
-            show_messages_from_users = [
-                user.user_being_followed_id for user in following_users]
-            show_messages_from_users.append(g.user.id)
-        else:
-            show_messages_from_users = [g.user.id]
-
-        # breakpoint()
+        user_following_ids = [user.id for user in g.user.following]
+        user_following_ids.append(g.user.id)
 
         messages = (Message
                     .query
-                    .filter(Message.user_id.in_(show_messages_from_users))
+                    .filter(Message.user_id.in_(user_following_ids))
                     .order_by(Message.timestamp.desc())
                     .limit(100)
                     .all())

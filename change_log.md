@@ -34,7 +34,6 @@ Added user bio to users page and search -> index.html
 Added form for logout POST request. Updated styling classes. -> base.html
 
 
-
 -----------------Notes-------------------
 
 Uncertain method for ordering messages on individual user page (users/show.html)
