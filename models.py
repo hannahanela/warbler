@@ -36,7 +36,7 @@ class Like(db.Model):
 
     message_being_liked_id = db.Column(
         db.Integer,
-        db.ForeignKey('message.id', ondelete="cascade"),
+        db.ForeignKey('messages.id', ondelete="cascade"),
         primary_key=True,
     )
 

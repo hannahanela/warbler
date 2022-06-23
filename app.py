@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 
 from forms import (UserAddForm, LoginForm, MessageForm, UserEditForm,
                    CSRFProtectForm)
-from models import (db, connect_db, User, Message, Follows,
+from models import (db, connect_db, User, Message, Follows, Like,
                     DEFAULT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL)
 
 load_dotenv()
