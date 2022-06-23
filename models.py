@@ -109,13 +109,14 @@ class User(db.Model):
         backref="following",
     )
 
-    # likes = db.relationship(
-    #     'Message',
-    #     secondary='likes',
-    #     primaryjoin=(Like.message_being_liked_id == id),
-    #     secondaryjoin=(Like.user_liking_id == id),
-    #     backref='users',
-    # )
+    #TODO: needs to be tested
+    likes = db.relationship(
+        'Message',
+        secondary='likes',
+        primaryjoin=(Like.message_being_liked_id == id),
+        secondaryjoin=(Like.user_liking_id == id),
+        backref='users',
+    )
 
 
     def __repr__(self):
@@ -162,6 +163,7 @@ class User(db.Model):
 
         return False
 
+
     def is_followed_by(self, other_user):
         """Is this user followed by `other_user`?"""
 
@@ -175,6 +177,14 @@ class User(db.Model):
         found_user_list = [
             user for user in self.following if user == other_user]
         return len(found_user_list) == 1
+
+
+    def likes_message(self, message_id):
+        """Does this user like this message?"""
+
+        liked_messages = [
+            message for message in self.likes if message == message_id]
+        return len(liked_messages) == 1
 
 
 class Message(db.Model):
@@ -206,13 +216,13 @@ class Message(db.Model):
     )
 
     # TODO: needs to be tested
-    likes = db.relationship(
-        'Message',
-        secondary='likes',
-        primaryjoin=(Like.message_being_liked_id == id),
-        secondaryjoin=(Like.user_liking_id == id),
-        backref='users',
-    )
+    # likes = db.relationship(
+    #     'Message',
+    #     secondary='likes',
+    #     primaryjoin=(Like.message_being_liked_id == id),
+    #     secondaryjoin=(Like.user_liking_id == id),
+    #     backref='users',
+    # )
 
 
 def connect_db(app):
