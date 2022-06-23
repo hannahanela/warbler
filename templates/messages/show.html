@@ -47,8 +47,7 @@
             </span>
             
 
-<!----Need to update routes!!!!!!!-->
-            {% if g.user %}
+            {% if g.user and message.user_id != g.user.id %}
             {% if g.user.likes_message( message.id ) %}
             <form method="POST"
                   action="/messages/unlike/{{ message.id }}">

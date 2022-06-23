@@ -335,6 +335,7 @@ def show_message(message_id):
     msg = Message.query.get_or_404(message_id)
     return render_template('messages/show.html', message=msg)
 
+
 @app.post('/messages/like/<int:message_id>')
 def like_message(message_id):
     """Like a message."""
@@ -344,16 +345,27 @@ def like_message(message_id):
         return redirect("/")
 
     liked_message = Message.query.get_or_404(message_id)
-    # TODO: move condition to templates
-    # if Message.user_id != g.user.id
 
-    # breakpoint()
     g.user.liked_messages.append(liked_message)
     db.session.commit()
 
-
     return redirect(f'/messages/{message_id}')
 
+
+@app.post('/messages/unlike/<int:message_id>')
+def unlike_message(message_id):
+    """Unlike a message."""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    liked_message = Message.query.get_or_404(message_id)
+
+    g.user.liked_messages.remove(liked_message)
+    db.session.commit()
+
+    return redirect(f'/messages/{message_id}')
 
 
 @app.post('/messages/<int:message_id>/delete')
