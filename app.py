@@ -286,12 +286,19 @@ def delete_user():
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    do_logout()
+    form = g.csrf_form
 
-    db.session.delete(g.user)
-    db.session.commit()
+    if form.validate_on_submit():
+        do_logout()
+        db.session.delete(g.user)
+        db.session.commit()
 
-    return redirect("/signup")
+        flash(f"Successfully deleted user.", "success")
+        return redirect("/signup")
+
+    flash("Access unauthorized.", "danger")
+    return redirect('/')
+
 
 
 ##############################################################################

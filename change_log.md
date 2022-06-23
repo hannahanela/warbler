@@ -16,6 +16,12 @@ Added navbar styling for buttons and their hover. -> style.css
 
 Changed template to create.html for add_message().
 
+Separated concerns for add_user_to_g(). Added add_csrf_form_to_g().
+
+Added CSRFProtectForm validation to delete_user().
+
+Refactored query for homepage() to display messages from followed users and user.
+
 
 -----------------templates/users Changes-------------------
 Added each followed_user bio to card-bio -> following.html
