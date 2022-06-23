@@ -207,7 +207,9 @@ def start_following(follow_id):
     Redirect to following page for the current for the current user.
     """
 
-    if not g.user:
+    form = g.csrf_form
+
+    if not (g.user and form.validate_on_submit()):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
@@ -225,7 +227,9 @@ def stop_following(follow_id):
     Redirect to following page for the current for the current user.
     """
 
-    if not g.user:
+    form = g.csrf_form
+
+    if not (g.user and form.validate_on_submit()):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
@@ -340,7 +344,9 @@ def show_message(message_id):
 def like_message(message_id):
     """Like a message."""
 
-    if not g.user:
+    form = g.csrf_form
+
+    if not (g.user and form.validate_on_submit()):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
@@ -356,7 +362,9 @@ def like_message(message_id):
 def unlike_message(message_id):
     """Unlike a message."""
 
-    if not g.user:
+    form = g.csrf_form
+
+    if not (g.user and form.validate_on_submit()):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 

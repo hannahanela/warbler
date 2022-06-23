@@ -518,6 +518,13 @@ p.card-bio {
   min-width: 105px;
 }
 
+#messages.no-hover .message-footer {
+  display: flex;
+  justify-content: space-between;
+  height: 47px;
+  margin-top: 3px;
+}
+
 .messages-like {
   position: absolute;
   top: 4px;
