@@ -339,6 +339,25 @@ def show_message(message_id):
     msg = Message.query.get_or_404(message_id)
     return render_template('messages/show.html', message=msg)
 
+@app.post('/messages/<int:message_id>')
+def like_message(message_id):
+    """Like a message."""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    liked_message = Message.query.get_or_404(message_id)
+    # FIXME: these are user authored messages, NOT all available messages by users
+    g.user.message.append(like_message)
+    db.session.commit()
+
+    # TODO: make template to display likes
+    # add a star to html????
+    # make 
+
+    return render_template()
+
 
 @app.post('/messages/<int:message_id>/delete')
 def delete_message(message_id):
