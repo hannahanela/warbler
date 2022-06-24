@@ -352,6 +352,8 @@ def show_message(message_id):
     return render_template('messages/show.html', message=msg)
 
 
+#TODO: Add check to prevent someone from liking their own message
+
 @app.post('/messages/like/<int:message_id>')
 def like_message(message_id):
     """Like a message.

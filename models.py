@@ -109,6 +109,7 @@ class User(db.Model):
         backref="following",
     )
 
+    #TODO: Consider changing "users" to something more explicit about "users_liking"
     liked_messages = db.relationship(
         'Message',
         secondary='likes',

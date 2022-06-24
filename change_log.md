@@ -22,6 +22,7 @@ Added CSRFProtectForm validation to delete_user().
 
 Refactored query for homepage() to display messages from followed users and user.
 
+Added csrf validation to follow/unfollow users on view functions.
 
 -----------------templates/users Changes-------------------
 Added each followed_user bio to card-bio -> following.html
@@ -33,6 +34,8 @@ Added user bio to user detail page -> detail.html
 Added inline styling for header image -> detail.html
 
 Added user bio to users page and search -> index.html
+
+Added csrf validation to follow/unfollow users on all templates
 
 
 -----------------templates Changes-------------------
