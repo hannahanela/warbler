@@ -313,7 +313,6 @@ def delete_user():
     return redirect('/')
 
 
-
 ##############################################################################
 # Messages routes:
 
@@ -352,12 +351,10 @@ def show_message(message_id):
     return render_template('messages/show.html', message=msg)
 
 
-#TODO: Add check to prevent someone from liking their own message
-
 @app.post('/messages/like/<int:message_id>')
 def like_message(message_id):
     """Like a message.
-    
+
         Currently redirects to show message page for liked message.
     """
 
@@ -369,6 +366,10 @@ def like_message(message_id):
 
     liked_message = Message.query.get_or_404(message_id)
 
+    if liked_message.user_id == g.user.id:
+        flash("Cannot like own message.", "danger")
+        return redirect(f'/messages/{message_id}')
+
     g.user.liked_messages.append(liked_message)
     db.session.commit()
 
@@ -378,7 +379,7 @@ def like_message(message_id):
 @app.post('/messages/unlike/<int:message_id>')
 def unlike_message(message_id):
     """Unlike a message.
-    
+
         Currently redirects to show message page for unliked message.
     """
 
