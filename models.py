@@ -11,6 +11,9 @@ db = SQLAlchemy()
 DEFAULT_IMAGE_URL = "/static/images/default-pic.png"
 DEFAULT_HEADER_IMAGE_URL = "/static/images/warbler-hero.jpg"
 
+# for testing
+HASHED_PASSWORD_LENGTH = 60
+
 
 class Follows(db.Model):
     """Connection of a follower <-> followed_user."""
@@ -124,6 +127,9 @@ class User(db.Model):
         """Sign up user.
 
         Hashes password and adds user to system.
+
+        ****If changing length of hashed password, please update
+            HASHED_PASSWORD_LENGTH variable.****
         """
 
         hashed_pwd = bcrypt.generate_password_hash(password).decode('UTF-8')

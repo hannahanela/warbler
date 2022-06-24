@@ -8,7 +8,7 @@
 import os
 from unittest import TestCase
 
-from models import db, User, Message, Follows
+from models import db, User, Message, Follows, HASHED_PASSWORD_LENGTH
 
 # BEFORE we import our app, let's set an environmental variable
 # to use a different database for tests (we need to do this
@@ -16,6 +16,8 @@ from models import db, User, Message, Follows
 # connected to the database
 
 os.environ['DATABASE_URL'] = "postgresql:///warbler_test"
+
+TEST_IMAGE_URL = "https://picsum.photos/id/237/200/300"
 
 # Now we can import app
 
@@ -47,7 +49,7 @@ class UserModelTestCase(TestCase):
 
 
     def test_user_model(self):
-        u1 = User.query.get(self.u1_id)
+        u1 = User.query.get_or_404(self.u1_id)
 
         # User should have no messages & no followers
         self.assertEqual(len(u1.messages), 0)
@@ -58,7 +60,7 @@ class UserModelTestCase(TestCase):
         """Test repr method returns correct string for user.
 
         """
-        u1 = User.query.get(self.u1_id)
+        u1 = User.query.get_or_404(self.u1_id)
 
         self.assertEqual(u1.__repr__(), f'<User #{u1.id}: u1, u1@email.com>')
 
@@ -68,7 +70,7 @@ class UserModelTestCase(TestCase):
         user 2
 
         """
-        u1 = User.query.get(self.u1_id)
+        u1 = User.query.get_or_404(self.u1_id)
         followed_user = User.query.get_or_404(self.u2_id)
         u1.following.append(followed_user)
         db.session.commit()
@@ -83,7 +85,7 @@ class UserModelTestCase(TestCase):
         following user2
 
         """
-        u1 = User.query.get(self.u1_id)
+        u1 = User.query.get_or_404(self.u1_id)
         not_followed_user = User.query.get_or_404(self.u2_id)
 
         is_following_result = u1.is_following(not_followed_user)
@@ -96,7 +98,7 @@ class UserModelTestCase(TestCase):
         followed by user2
 
         """
-        u1 = User.query.get(self.u1_id)
+        u1 = User.query.get_or_404(self.u1_id)
         following_user = User.query.get_or_404(self.u2_id)
         following_user.following.append(u1)
         db.session.commit()
@@ -111,9 +113,35 @@ class UserModelTestCase(TestCase):
         followed by user2
 
         """
-        u1 = User.query.get(self.u1_id)
+        u1 = User.query.get_or_404(self.u1_id)
         following_user = User.query.get_or_404(self.u2_id)
 
         is_followed_by_result = u1.is_followed_by(following_user)
 
         self.assertFalse(is_followed_by_result)
+
+    def test_user_signup_successful(self):
+        """Test if signup user method successfully:
+            - hashes password
+            - adds to database
+            - returns instance of user.
+        
+        """
+        test_user = User.signup(
+            "u_test",
+            "u_test@email.com",
+            "test_password",
+            TEST_IMAGE_URL,
+            )
+
+        # Test hashed password length is HASHED_PASSWORD_LENGTH.
+        hashed_password = test_user.password
+        self.assertEqual(len(hashed_password), HASHED_PASSWORD_LENGTH)
+
+        # Test successfully added to db.
+        test_user_in_db = User.query.filter_by(id = test_user.id).one_or_none()
+        self.assertIsNotNone(test_user_in_db)
+
+        # Test is instance of User.
+        self.assertIsInstance(test_user, User)
+        
