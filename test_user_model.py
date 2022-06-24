@@ -7,6 +7,8 @@
 
 import os
 from unittest import TestCase
+from sqlalchemy.exc import IntegrityError
+#from flask_bcrypt import ValueError
 
 from models import db, User, Message, Follows, HASHED_PASSWORD_LENGTH
 
@@ -32,6 +34,7 @@ db.create_all()
 
 class UserModelTestCase(TestCase):
     def setUp(self):
+        db.session.rollback()
         User.query.delete()
 
         u1 = User.signup("u1", "u1@email.com", "password", None)
@@ -139,9 +142,60 @@ class UserModelTestCase(TestCase):
         self.assertEqual(len(hashed_password), HASHED_PASSWORD_LENGTH)
 
         # Test successfully added to db.
-        test_user_in_db = User.query.filter_by(id = test_user.id).one_or_none()
+        test_user_in_db = User.query.filter_by(username='u_test').one_or_none()
         self.assertIsNotNone(test_user_in_db)
 
         # Test is instance of User.
         self.assertIsInstance(test_user, User)
+        
+
+    def test_user_signup_failure(self):
+        """Test is user signup fails:
+            - Cannot add user without a username
+            - Cannot add user with same username
+            - Cannot add user without a password
+            - TODO:Cannot add user without an email
+            
+            """
+
+        def attempt_no_username():
+            User.signup(
+                None,
+                "u_test@email.com",
+                "test_password",
+                TEST_IMAGE_URL,
+                ) 
+            return 'attempt_no_username failed'           
+
+        self.assertRaises(IntegrityError, attempt_no_username)
+        db.session.rollback()
+
+        def attempt_duplicate_username():
+            User.signup(
+                "u1",
+                "u_test@email.com",
+                "test_password",
+                TEST_IMAGE_URL,
+                ) 
+            return 'create_duplicate_username failed'           
+
+        self.assertRaises(IntegrityError, attempt_duplicate_username)
+        db.session.rollback()
+        
+        def attempt_no_password():
+            User.signup(
+                "u_test",
+                "u_test@email.com",
+                None,
+                TEST_IMAGE_URL,
+                ) 
+            return 'attempt_no_password failed'           
+
+        self.assertRaises(ValueError, attempt_no_password)
+        db.session.rollback()
+
+
+
+       
+
         
