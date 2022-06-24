@@ -1,3 +1,5 @@
+# TODO: add additional tests.
+
 """Message View tests."""
 
 # run these tests like:

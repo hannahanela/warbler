@@ -1,8 +1,6 @@
 -----------------models.py Changes-------------------
 User image_url and header_image_url -> not nullable
 
-Added session.commit to User signup method
-
 Added autoincrement=True to message id column and user id column
 
 Added nullable=False and default='' to user.bio

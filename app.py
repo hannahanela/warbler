@@ -201,7 +201,7 @@ def show_followers(user_id):
 
 
 @app.get('/users/<int:user_id>/liked_messages')
-def show_liked_message(user_id):
+def show_liked_messages(user_id):
     """Show list of messages liked by this user."""
 
     if not g.user:
@@ -217,6 +217,7 @@ def start_following(follow_id):
     """Add a follow for the currently-logged-in user.
 
     Redirect to following page for the current for the current user.
+    TODO: Update with AJAX so page doesn't need to refresh/redirect.
     """
 
     form = g.csrf_form
@@ -237,6 +238,7 @@ def stop_following(follow_id):
     """Have currently-logged-in-user stop following this user.
 
     Redirect to following page for the current for the current user.
+    TODO: Update with AJAX so page doesn't need to refresh/redirect.
     """
 
     form = g.csrf_form
@@ -356,6 +358,7 @@ def like_message(message_id):
     """Like a message.
 
         Currently redirects to show message page for liked message.
+        TODO: Update with AJAX so page doesn't need to refresh/redirect.
     """
 
     form = g.csrf_form
@@ -381,6 +384,7 @@ def unlike_message(message_id):
     """Unlike a message.
 
         Currently redirects to show message page for unliked message.
+        TODO: Update with AJAX so page doesn't need to refresh/redirect.
     """
 
     form = g.csrf_form
